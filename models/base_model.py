@@ -8,13 +8,12 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Create (or load) a new BaseModel"""
-        if kwargs:
-            for key, value in kwargs.items():
-                if hasattr(self, key):
-                    if key == "created_at" or key == "updated_at":
-                        setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
-                    else:
-                        setattr(self, key, value)
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                if key == "created_at" or key == "updated_at":
+                    self.key = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                else:
+                    self.key = value
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
