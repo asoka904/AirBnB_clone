@@ -2,7 +2,7 @@
 """ This module define the BaseModel class """
 import uuid
 from datetime import datetime
-
+from models import storage
 
 class BaseModel:
 
@@ -18,6 +18,8 @@ class BaseModel:
                         setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
                     else:
                         setattr(self, key, value)
+        else:
+            storage.new(self)
 
     def __str__(self):
         """Return a string with attributes of the instance"""
@@ -27,6 +29,7 @@ class BaseModel:
     def save(self):
         """Updates the attribute updated_at with the current datetime"""
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of __dict__ of the
