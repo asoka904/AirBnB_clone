@@ -8,16 +8,16 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Create (or load) a new BaseModel"""
-        for key, value in kwargs.items():
-            if hasattr(self, key):
-                if key == "created_at" or key == "updated_at":
-                    self.key = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                else:
-                    self.key = value
-        else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+        if len(kwargs) != 0:
+            for key, value in kwargs.items():
+                if key is not '__class__':
+                    if key is 'created_at' or key is 'updated_at':
+                        setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                    else:
+                        setattr(self, key, value)
 
     def __str__(self):
         """Return a string with attributes of the instance"""
