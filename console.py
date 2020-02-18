@@ -32,8 +32,8 @@ class HBNBCommand(cmd.Cmd):
             print(base.id)
 
     def do_show(self, line):
-        'Prints the string representation of an instance based on the class
-        name and id'
+        "Prints the string representation of an instance based on the class \
+name and id"
         if self.check_class(line) and self.check_id(line):
             results = self.storage.all()
             if self.check_id(line) in results:

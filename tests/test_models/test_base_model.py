@@ -74,3 +74,7 @@ class TestBaseModel(unittest.TestCase):
         })
         base = BaseModel(**my_dict)
         self.assertEqual(base.name, 'Holberton')
+
+
+if __name__ == '__main__':
+    unittest.main()
