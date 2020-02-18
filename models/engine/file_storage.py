@@ -1,7 +1,7 @@
 #!/usr/bin/python3
+"""Manage the storage of every object"""
 import json
 import os
-"""Manage the storage of every object"""
 
 
 class FileStorage:

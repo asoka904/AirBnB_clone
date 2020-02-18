@@ -1,14 +1,16 @@
 #!/usr/bin/python3
+"""Entry point of the command interpreter"""
 import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
 class HBNBCommand(cmd.Cmd):
-
+    """Define the behavior of the command interpreter"""
     prompt = '(hbnb) '
 
     def preloop(self):
+        """Load the objects in the storage"""
         self.storage = FileStorage()
         self.storage.reload()
 
@@ -17,6 +19,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
+        """Called when an empty line is entered in response to the prompt"""
         return ''
 
     def do_EOF(self, line):
@@ -32,8 +35,8 @@ class HBNBCommand(cmd.Cmd):
             print(base.id)
 
     def do_show(self, line):
-        "Prints the string representation of an instance based on the class \
-name and id"
+        'Prints the string representation of an instance based on the class \
+name and id'
         if self.check_class(line) and self.check_id(line):
             results = self.storage.all()
             if self.check_id(line) in results:
@@ -42,6 +45,7 @@ name and id"
                 print("** no instance found **")
 
     def check_class(self, line):
+        """Check if the class called exist"""
         commands = line.split()
         for i, c in enumerate(commands):
             if i is 0:
@@ -54,6 +58,7 @@ name and id"
         return False
 
     def check_id(self, line):
+        """Check the command arg"""
         commands = line.split()
         if len(commands) >= 2:
             return commands[1]
