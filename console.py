@@ -32,14 +32,15 @@ class HBNBCommand(cmd.Cmd):
             print(base.id)
 
     def do_show(self, line):
-        'Prints the string representation of an instance based on the class name and id'
+        'Prints the string representation of an instance based on the class
+        name and id'
         if self.check_class(line) and self.check_id(line):
             results = self.storage.all()
             if self.check_id(line) in results:
                 print(results[self.check_id(line)])
             else:
                 print("** no instance found **")
-        
+
     def check_class(self, line):
         commands = line.split()
         for i, c in enumerate(commands):
@@ -58,6 +59,7 @@ class HBNBCommand(cmd.Cmd):
             return commands[1]
         print("** instance id missing **")
         return False
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-
 import unittest
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from datetime import datetime
+
 
 class TestFileStorage(unittest.TestCase):
 
@@ -50,4 +50,3 @@ class TestFileStorage(unittest.TestCase):
         storage.new(base)
         storage.save()
         storage.reload()
-

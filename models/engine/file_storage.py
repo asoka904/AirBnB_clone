@@ -2,6 +2,7 @@
 import json
 import os
 
+
 class FileStorage:
     __file_path = "file.json"
     __objects = {}
@@ -20,7 +21,8 @@ class FileStorage:
             f.write(json.dumps(self.__objects))
 
     def reload(self):
-        """deserializes the JSON file to __objects (only if the JSON file (__file_path)"""
+        """deserializes the JSON file to __objects (only if the JSON file
+        (__file_path) exists; otherwise, do nothing."""
         if os.path.isfile(self.__file_path):
             with open(self.__file_path, 'r') as f:
                 results = f.read()

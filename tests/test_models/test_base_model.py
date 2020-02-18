@@ -1,8 +1,8 @@
 #!usr/bin/python3
-
 import unittest
 from models.base_model import BaseModel
 from datetime import datetime
+
 
 class TestBaseModel(unittest.TestCase):
 
@@ -35,7 +35,8 @@ class TestBaseModel(unittest.TestCase):
             'name': 'Holberton'
         })
         base = BaseModel(**my_dict)
-        self.assertEqual(base.created_at, datetime.strptime('2017-09-28T21:03:54.052298', "%Y-%m-%dT%H:%M:%S.%f"))
+        self.assertEqual(base.created_at, datetime.strptime(
+                    '2017-09-28T21:03:54.052298', "%Y-%m-%dT%H:%M:%S.%f"))
 
     def test_init04(self):
         my_dict = dict({
@@ -47,7 +48,8 @@ class TestBaseModel(unittest.TestCase):
             'name': 'Holberton'
         })
         base = BaseModel(**my_dict)
-        self.assertEqual(base.updated_at, datetime.strptime('2017-09-28T21:03:54.052302', "%Y-%m-%dT%H:%M:%S.%f"))
+        self.assertEqual(base.updated_at, datetime.strptime(
+                    '2017-09-28T21:03:54.052302', "%Y-%m-%dT%H:%M:%S.%f"))
 
     def test_init05(self):
         my_dict = dict({
