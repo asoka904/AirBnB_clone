@@ -15,8 +15,7 @@ class HBNBCommand(cmd.Cmd):
         self.storage.reload()
 
     def do_quit(self, arg):
-        """Command to exit the program"""
-        'Quit command to exit the program'
+        """Quit command to exit the program"""
         return True
 
     def emptyline(self):
@@ -24,13 +23,11 @@ class HBNBCommand(cmd.Cmd):
         return ''
 
     def do_EOF(self, line):
-        """"Command to exit the program"""
-        'EOF command to exit the program'
+        """EOFCommand to exit the program"""
         return True
 
     def do_create(self, line):
         """Creates a new instance of BaseModel and saves it"""
-        'Creates a new instance of BaseModel and saves it '
         if self.check_class(line):
             base = BaseModel()
             self.storage.new(base)
@@ -39,8 +36,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """prints the string representarion of an instance"""
-        'Prints the string representation of an instance based on the class \
-name and id'
         if self.check_class(line) and self.check_id(line):
             results = self.storage.all()
             if self.check_id(line) in results:
