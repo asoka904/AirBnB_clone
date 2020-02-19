@@ -17,4 +17,5 @@ class User(BaseModel):
     last_name = ""
 
     def __init__(self, *args, **kwargs):
+        """Create (or load) a new User"""
         super().__init__(self, *args, **kwargs)
