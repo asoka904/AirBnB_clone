@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    Manage the storage of every object
+Manage the storage of every object
 """
 import json
 import os
@@ -25,7 +25,7 @@ class FileStorage:
 
     def new(self, obj):
         """sets in __objects the obj"""
-        key = obj.__class__.__name__ + "." + obj.id
+        key = str(obj.__class__.__name__) + "." + str(obj.id)
         self.__objects[key] = obj
 
     def save(self):
