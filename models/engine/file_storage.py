@@ -1,7 +1,10 @@
 #!/usr/bin/python3
-"""Manage the storage of every object"""
+"""
+    Manage the storage of every object
+"""
 import json
 import os
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -16,12 +19,16 @@ class FileStorage:
 
     def new(self, obj):
         """sets in __objects the obj"""
-        self.__objects[obj.id] = obj.to_dict()
+        key = obj.__class__.__name__ + "." + obj.id
+        self.__objects[key] = obj
 
     def save(self):
         """serializes __objects to the JSON file"""
+        new_obj = {}
         with open(self.__file_path, 'w') as f:
-            f.write(json.dumps(self.__objects))
+            for k, v in self.__objects.items():
+                new_obj[k] = v.to_dict()
+            f.write(json.dumps(new_obj))
 
     def reload(self):
         """reload method"""
@@ -29,4 +36,6 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 results = f.read()
                 if results is not "":
-                    self.__objects = json.loads(results)
+                    my_json = json.loads(results)
+                    for k, v in my_json.items():
+                        self.__objects[k] = BaseModel(**v)
