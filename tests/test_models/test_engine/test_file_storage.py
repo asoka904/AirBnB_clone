@@ -7,6 +7,7 @@ from models.engine.file_storage import FileStorage
 from datetime import datetime
 import os
 
+
 class TestFileStorage(unittest.TestCase):
     """Start test"""
 
@@ -18,7 +19,8 @@ class TestFileStorage(unittest.TestCase):
     def test_doc01(self):
         """test docstring for class"""
         msg = "Class has not docstring"
-        self.assertIsNotNone(models.engine.file_storage.FileStorage.__doc__, msg)
+        doc = models.engine.file_storage.FileStorage.__doc__
+        self.assertIsNotNone(doc, msg)
 
     def test_doc02(self):
         """test docstring for methods"""
