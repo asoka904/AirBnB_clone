@@ -15,8 +15,8 @@ class HBNBCommand(cmd.Cmd):
     """Define the behavior of the command interpreter"""
 
     prompt = '(hbnb) '
-    __models =
-    ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+    __models = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place',
+                'Review']
 
     def preloop(self):
         """Load the objects in the storage"""
