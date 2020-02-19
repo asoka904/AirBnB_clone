@@ -39,12 +39,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """prints the string representarion of an model instance"""
-        cmd_class = self.check_class(line)
-        cmd_id = self.check_id(line)
+        key = self.check_class_id(line)
 
-        if cmd_class and cmd_id:
+        if key:
             results = storage.all()
-            key = cmd_class + "." + cmd_id
             if key in results:
                 print(results[key])
             else:
@@ -61,6 +59,7 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
             else:
                 print("** no instance found **")
+
     def do_all(self, line):
         """Shows all instances"""
         commands = line.split()
@@ -68,7 +67,9 @@ class HBNBCommand(cmd.Cmd):
         if len(commands) == 0:
             print([str(values) for values in results.values()])
         elif commands[0] in self.__models:
-            print([str(values) for key, values in results.items() if commands[0] in jey])
+            print([str(values) for key, values in results.items() if commands[0] in key])
+        else:
+            print("** class doesn't exist **")
 
     def check_class(self, line):
         """Check if the class called exist"""
@@ -93,13 +94,13 @@ class HBNBCommand(cmd.Cmd):
 
     def check_class_id(self, line):
         cmd_class = self.check_class(line)
-        cmd_id = self.check_id(line)
-
-        if cmd_class and cmd_id:
-            key = cmd_class + "." + cmd_id
-            return key
-        else:
-            return None
+        if cmd_class:
+            cmd_id = self.check_id(line)
+            if cmd_id:
+                key = cmd_class + "." + cmd_id
+                return key
+            else:
+                return None
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
