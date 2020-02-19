@@ -7,6 +7,7 @@ from models.engine.file_storage import FileStorage
 
 class HBNBCommand(cmd.Cmd):
     """Define the behavior of the command interpreter"""
+
     prompt = '(hbnb) '
 
     def preloop(self):

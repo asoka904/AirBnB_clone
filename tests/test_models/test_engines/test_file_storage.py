@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Test File Storage"""
 import unittest
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
@@ -6,8 +7,10 @@ from datetime import datetime
 
 
 class TestFileStorage(unittest.TestCase):
+    """Start tests"""
 
     def test_new00(self):
+        """test new00"""
         storage = FileStorage()
         my_dict = dict({
             'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337',
@@ -22,6 +25,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(my_dict['id'], storage.all())
 
     def test_save00(self):
+        """test save00"""
         storage = FileStorage()
         my_dict = dict({
             'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337',
@@ -36,6 +40,7 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
 
     def test_reload00(self):
+        """test reload00"""
         storage = FileStorage()
         my_dict = dict({
             'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337',
