@@ -5,7 +5,7 @@ import models.engine
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from datetime import datetime
-
+import os
 
 class TestFileStorage(unittest.TestCase):
     """Start test"""
@@ -23,13 +23,32 @@ class TestFileStorage(unittest.TestCase):
     def test_doc02(self):
         """test docstring for methods"""
         msg = "all method has not docstring"
-        self.assertIsNotNone(models.engine.file_storage.FileStorage.all.__doc__, msg)
+        function = models.engine.file_storage.FileStorage.all.__doc__
+        self.assertIsNotNone(function, msg)
+
         msg = "new method has not docstring"
-        self.assertIsNotNone(models.engine.file_storage.FileStorage.new.__doc__, msg)
+        function = models.engine.file_storage.FileStorage.new.__doc__
+        self.assertIsNotNone(function, msg)
+
         msg = "save method has not docstring"
-        self.assertIsNotNone(models.engine.file_storage.FileStorage.save.__doc__, msg)
+        function = models.engine.file_storage.FileStorage.save.__doc__
+        self.assertIsNotNone(function, msg)
+
         msg = "reload method has not docstring"
-        self.assertIsNotNone(models.engine.file_storage.FileStorage.reload.__doc__, msg)
+        function = models.engine.file_storage.FileStorage.reload.__doc__
+        self.assertIsNotNone(function, msg)
+
+    def test_file(self):
+        """test the file permissions"""
+        path = 'tests/test_models/test_engine/test_file_storage.py'
+        is_readable = os.access(path, os.R_OK)
+        self.assertTrue(is_readable)
+
+        is_executable = os.access(path, os.X_OK)
+        self.assertTrue(is_executable)
+
+        is_writable = os.access(path, os.W_OK)
+        self.assertTrue(is_writable)
 
     def test_instance00(self):
         """test instance"""
