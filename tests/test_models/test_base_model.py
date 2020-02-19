@@ -22,7 +22,7 @@ class TestBaseModel(unittest.TestCase):
     def test_doc02(self):
         """test docstring for methods"""
         msg = "__init__ method has not docstring"
-        self.assertIsNotNone(models.base_model.BaseModel.__init__.__doc__, msg)
+        self.assertIsNotNone(models.base_model.BaseModel.__init__.__doc__, msg)   
         msg = "__str__ method has not docstring"
         self.assertIsNotNone(models.base_model.BaseModel.__str__.__doc__, msg)
         msg = "__save__ method has not docstring"

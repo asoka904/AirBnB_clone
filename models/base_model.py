@@ -38,8 +38,7 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """Returns a dictionary containing all keys/values of the
-        instance"""
+        """Returns a dictionary containing all key-values of instance"""
         my_dict = {}
         for k, v in self.__dict__.items():
             my_dict[k] = v

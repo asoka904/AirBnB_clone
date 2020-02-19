@@ -2,7 +2,6 @@
 """Test File Storage"""
 import unittest
 import models
-from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from datetime import datetime
 import os
@@ -40,9 +39,21 @@ class TestFileStorage(unittest.TestCase):
         function = FileStorage.reload.__doc__
         self.assertIsNotNone(function, msg)
 
-    def test_file(self):
+    def test_file00(self):
         """test the file permissions"""
         path = 'tests/test_models/test_engine/test_file_storage.py'
+        is_readable = os.access(path, os.R_OK)
+        self.assertTrue(is_readable)
+
+        is_executable = os.access(path, os.X_OK)
+        self.assertTrue(is_executable)
+
+        is_writable = os.access(path, os.W_OK)
+        self.assertTrue(is_writable)
+
+    def test_file01(self):
+        """test the file permissions"""
+        path = 'models/engine/file_storage.py'
         is_readable = os.access(path, os.R_OK)
         self.assertTrue(is_readable)
 
@@ -56,59 +67,3 @@ class TestFileStorage(unittest.TestCase):
         """test instance"""
         storage = FileStorage()
         self.assertIsInstance(storage, FileStorage)
-
-    def test_instance01(self):
-        """test instance is equal"""
-        storage1 = FileStorage()
-        storage2 = FileStorage()
-        self.assertNotEqual(storage1, storage2)
-
-    def test_new00(self):
-        """test new00"""
-        storage = FileStorage()
-        my_dict = dict({
-            'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337',
-            'created_at': '2017-09-28T21:03:54.052298',
-            '__class__': 'BaseModel',
-            'my_number': 89,
-            'updated_at': '2017-09-28T21:03:54.052302',
-            'name': 'Holberton'
-        })
-        base = BaseModel(**my_dict)
-        storage.new(base)
-        key = "BaseModel" + "." + my_dict['id']
-        self.assertIn(key, storage.all())
-
-    def test_save00(self):
-        """test save00"""
-        storage = FileStorage()
-        my_dict = dict({
-            'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337',
-            'created_at': '2017-09-28T21:03:54.052298',
-            '__class__': 'BaseModel',
-            'my_number': 89,
-            'updated_at': '2017-09-28T21:03:54.052302',
-            'name': 'Holberton'
-        })
-        base = BaseModel(**my_dict)
-        storage.new(base)
-        storage.save()
-
-    def test_reload00(self):
-        """test reload00"""
-        storage = FileStorage()
-        my_dict = dict({
-            'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337',
-            'created_at': '2017-09-28T21:03:54.052298',
-            '__class__': 'BaseModel',
-            'my_number': 89,
-            'updated_at': '2017-09-28T21:03:54.052302',
-            'name': 'Holberton'
-        })
-        key = "BaseModel" + "." + my_dict['id']
-        self.assertIn(key, storage.all())
-        base = BaseModel(**my_dict)
-        storage.new(base)
-        storage.save()
-        storage.reload()
-        self.assertIn(key, storage.all())
