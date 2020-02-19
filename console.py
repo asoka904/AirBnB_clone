@@ -15,12 +15,12 @@ class HBNBCommand(cmd.Cmd):
     """Define the behavior of the command interpreter"""
 
     prompt = '(hbnb) '
-    __models = ['BaseModel', 'User']
+    __models =
+    ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
 
     def preloop(self):
         """Load the objects in the storage"""
-        #self.storage = FileStorage()
-        #self.storage.reload()
+        pass
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -74,7 +74,8 @@ class HBNBCommand(cmd.Cmd):
             print([str(values) for values in results.values()])
         else:
             if commands[0] in self.__models:
-                print([str(values) for key, values in results.items() if commands[0] in key])
+                print([str(values) for key, values in results.items() if
+                      commands[0] in key])
             else:
                 print("** class doesn't exist **")
 
@@ -91,7 +92,7 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
             else:
                 print("** no instance found **")
-                
+
     def check_class(self, line):
         """Check if the class exists"""
         commands = line.split()
@@ -125,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
                 return None
 
     def check_attribute_value(self, line):
-        """Check if rhe attribute and the value exists"""
+        """Check if the attribute and the value exists"""
         commands = line.split()
         if len(commands) > 2:
             if len(commands) > 3:
@@ -136,6 +137,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** attribute name missing **")
             return None
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
