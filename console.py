@@ -2,6 +2,7 @@
 """Entry point of the command interpreter"""
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -9,7 +10,7 @@ class HBNBCommand(cmd.Cmd):
     """Define the behavior of the command interpreter"""
 
     prompt = '(hbnb) '
-    __models = ['BaseModel']
+    __models = ['BaseModel', 'User']
 
     def preloop(self):
         """Load the objects in the storage"""
@@ -32,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of a model and saves it"""
         cmd_class = self.check_class(line)
         if cmd_class:
-            model = BaseModel()
+            model = eval(cmd_class)()
             storage.new(model)
             storage.save()
             print(model.id)
@@ -67,8 +68,11 @@ class HBNBCommand(cmd.Cmd):
         results = storage.all()
         if len(commands) == 0:
             print([str(values) for values in results.values()])
-        elif commands[0] in self.__models:
-            print([str(values) for key, values in results.items() if commands[0] in jey])
+        else:
+            if commands[0] in self.__models:
+                print([str(values) for key, values in results.items() if commands[0] in key])
+            else:
+                print("** class doesn't exist **")
 
     def check_class(self, line):
         """Check if the class called exist"""
