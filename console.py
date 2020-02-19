@@ -17,6 +17,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     __models = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place',
                 'Review']
+    __methods = ['all()']
 
     def preloop(self):
         """Load the objects in the storage"""
@@ -138,6 +139,19 @@ class HBNBCommand(cmd.Cmd):
             print("** attribute name missing **")
             return None
 
+    def default(self, line):
+        """When the command is not recognized"""
+        commands = line.split()
+        if len(commands) > 0:
+            cmd_class = commands[0].split(".")
+            if len(cmd_class) == 2:
+                if cmd_class[0] in self.__models:
+                    if cmd_class[1] in self.__methods:
+                        results = storage.all()
+                        print([str(values) for key, values in results.items()
+                              if cmd_class[0] in key])
+                        return
+        print("Unknown syntax: {}".format(line))
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
