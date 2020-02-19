@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Test File Storage"""
 import unittest
-import models.engine
+import models
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from datetime import datetime
@@ -19,25 +19,25 @@ class TestFileStorage(unittest.TestCase):
     def test_doc01(self):
         """test docstring for class"""
         msg = "Class has not docstring"
-        doc = models.engine.file_storage.FileStorage.__doc__
+        doc = FileStorage.__doc__
         self.assertIsNotNone(doc, msg)
 
     def test_doc02(self):
         """test docstring for methods"""
         msg = "all method has not docstring"
-        function = models.engine.file_storage.FileStorage.all.__doc__
+        function = FileStorage.all.__doc__
         self.assertIsNotNone(function, msg)
 
         msg = "new method has not docstring"
-        function = models.engine.file_storage.FileStorage.new.__doc__
+        function = FileStorage.new.__doc__
         self.assertIsNotNone(function, msg)
 
         msg = "save method has not docstring"
-        function = models.engine.file_storage.FileStorage.save.__doc__
+        function = FileStorage.save.__doc__
         self.assertIsNotNone(function, msg)
 
         msg = "reload method has not docstring"
-        function = models.engine.file_storage.FileStorage.reload.__doc__
+        function = FileStorage.reload.__doc__
         self.assertIsNotNone(function, msg)
 
     def test_file(self):
