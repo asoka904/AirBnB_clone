@@ -17,7 +17,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     __models = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place',
                 'Review']
-    __methods = ['all()', 'count()']
+    __methods = ['all()', 'count()', 'show()']
 
     def preloop(self):
         """Load the objects in the storage"""
@@ -146,15 +146,29 @@ class HBNBCommand(cmd.Cmd):
             cmd_class = commands[0].split(".")
             if len(cmd_class) == 2:
                 if cmd_class[0] in self.__models:
+                    results = storage.all()
                     if cmd_class[1] in self.__methods:
-                        results = storage.all()
+
                         if cmd_class[1] == "all()":
                             print([str(v) for k, v in results.items()
                                   if cmd_class[0] in k])
+                            return
+
                         if cmd_class[1] == "count()":
                             print(len([str(v) for k, v in results.items()
                                   if cmd_class[0] in k]))
-                        return
+                            return
+
+                    s = str(cmd_class[1][:5]) + str(cmd_class[1][-1])
+                    if s == "show()":
+                        key = cmd_class[0] + "." + cmd_class[1][6:-2]
+                        if key in results:
+                            print(results[key])
+                            return
+                        else:
+                            print("** no instance found **")
+                            return
+
         print("Unknown syntax: {}".format(line))
 
 if __name__ == "__main__":
