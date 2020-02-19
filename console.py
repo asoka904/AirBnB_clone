@@ -40,12 +40,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """prints the string representarion of an model instance"""
-        cmd_class = self.check_class(line)
-        cmd_id = self.check_id(line)
+        key = self.check_class_id(line)
 
-        if cmd_class and cmd_id:
+        if key:
             results = storage.all()
-            key = cmd_class + "." + cmd_id
             if key in results:
                 print(results[key])
             else:
@@ -62,8 +60,9 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
             else:
                 print("** no instance found **")
+
     def do_all(self, line):
-        """Shows all instances"""
+        """Shows all instances or specific ones"""
         commands = line.split()
         results = storage.all()
         if len(commands) == 0:
@@ -74,8 +73,22 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class doesn't exist **")
 
+    def do_update(self, line):
+        """Updates an istance"""
+        key = self.check_class_id(line)
+
+        if key:
+            results = storage.all()
+            if key in results:
+                att_val = self.check_attribute_value(line)
+                if att_val:
+                    setattr(results[key], att_val[0], att_val[1])
+                    storage.save()
+            else:
+                print("** no instance found **")
+                
     def check_class(self, line):
-        """Check if the class called exist"""
+        """Check if the class exists"""
         commands = line.split()
         if len(commands) > 0:
             if commands[0] in self.__models:
@@ -88,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def check_id(self, line):
-        """Check the command arg"""
+        """Check if the id exits"""
         commands = line.split()
         if len(commands) > 1:
             return commands[1]
@@ -96,13 +109,27 @@ class HBNBCommand(cmd.Cmd):
         return None
 
     def check_class_id(self, line):
+        """Check the class and id exits"""
         cmd_class = self.check_class(line)
-        cmd_id = self.check_id(line)
+        if cmd_class:
+            cmd_id = self.check_id(line)
+            if cmd_id:
+                key = cmd_class + "." + cmd_id
+                return key
+            else:
+                return None
 
-        if cmd_class and cmd_id:
-            key = cmd_class + "." + cmd_id
-            return key
+    def check_attribute_value(self, line):
+        """Check if rhe attribute and the value exists"""
+        commands = line.split()
+        if len(commands) > 2:
+            if len(commands) > 3:
+                return (commands[2], commands[3])
+            else:
+                print("** value missing **")
+                return None
         else:
+            print("** attribute name missing **")
             return None
 
 if __name__ == "__main__":
