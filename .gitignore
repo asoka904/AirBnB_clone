@@ -131,3 +131,4 @@ dmypy.json
 # Others
 .gitignore
 *.swp
+file.json
