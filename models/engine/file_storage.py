@@ -5,6 +5,7 @@
 import json
 import os
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -38,4 +39,5 @@ class FileStorage:
                 if results is not "":
                     my_json = json.loads(results)
                     for k, v in my_json.items():
-                        self.__objects[k] = BaseModel(**v)
+                        cls = eval(v["__class__"])(**v)
+                        self.__objects[k] = cls
