@@ -141,57 +141,47 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """When the command is not recognized"""
-        commands = line.split()
-        if len(commands) > 0:
-            cmd_class = commands[0].split(".")
-            if len(cmd_class) == 2:
-                if cmd_class[0] in self.__models:
-                    results = storage.all()
-                    if cmd_class[1] in self.__methods:
+        cmds = line.split(".")
+        if len(cmds) > 1:
+            if cmds[0] in self.__models:
+                results = storage.all()
+                if cmds[1] == "all()":
+                    self.do_all(cmds[0])
+                    return
+                if cmds[1] == "count()":
+                    print(len([str(v) for k, v in results.items()
+                          if cmds[0] in k]))
+                    return
 
-                        if cmd_class[1] == "all()":
-                            print([str(v) for k, v in results.items()
-                                  if cmd_class[0] in k])
-                            return
+                s = str(cmds[1][:5]) + str(cmds[1][-1])
+                key = cmds[1][6:-2]
+                if s == "show()":
+                    self.do_show(cmds[0] + " " + key)
+                    return
 
-                        if cmd_class[1] == "count()":
-                            print(len([str(v) for k, v in results.items()
-                                  if cmd_class[0] in k]))
-                            return
+                s = str(cmd_class[1][:8]) + str(cmd_class[1][-1])
+                key = cmd_class[0] + "." + cmd_class[1][9:-2]
+                if s == "destroy()":
+                    if key in results:
+                        del results[key]
+                        storage.save()
+                        return
+                    else:
+                        print("** no instance found **")
+                        return
 
-                    s = str(cmd_class[1][:5]) + str(cmd_class[1][-1])
-                    key = cmd_class[0] + "." + cmd_class[1][6:-2]
-                    if s == "show()":
-                        if key in results:
-                            print(results[key])
-                            return
-                        else:
-                            print("** no instance found **")
-                            return
-
-                    s = str(cmd_class[1][:8]) + str(cmd_class[1][-1])
-                    key = cmd_class[0] + "." + cmd_class[1][9:-2]
-                    if s == "destroy()":
-                        if key in results:
-                            del results[key]
-                            storage.save()
-                            return
-                        else:
-                            print("** no instance found **")
-                            return
-
-                    s = str(cmd_class[1][:7]) + str(cmd_class[1][-1])
-                    print(s)
-                    if s == "update()":
-                        new_s = cmd_class[1].split(",")
-                        print(new_s)
-                        if len(new_s) == 3:
-                            print("attribute")
-                            att = cmd_class
-                            return
-                        if len(new_s) == 2:
-                            print("dict")
-                            return
+                s = str(cmd_class[1][:7]) + str(cmd_class[1][-1])
+                print(s)
+                if s == "update()":
+                    new_s = cmd_class[1].split(",")
+                    print(new_s)
+                    if len(new_s) == 3:
+                        print("attribute")
+                        att = cmd_class
+                        return
+                    if len(new_s) == 2:
+                        print("dict")
+                        return
 
         print("Unknown syntax: {}".format(line))
 
