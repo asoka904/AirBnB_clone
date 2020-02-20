@@ -176,6 +176,8 @@ class HBNBCommand(cmd.Cmd):
                         if key in results:
                             for k, v in my_dict.items():
                                 setattr(results[key], k, v)
+                        else:
+                            print("** no instance found **")
                         return
                     else:
                         cm = cmds[1].split("\"")
