@@ -182,8 +182,9 @@ class HBNBCommand(cmd.Cmd):
                         elif len(cm) <= 5:
                             print("** value missing **")
                             return
-                        elif len(cm) >= 7:
-                            u = cmds[0] + " " + cm[1]  + " " + cm[3] + " " + cm[5]
+                        else:
+                            u = cmds[0] + " " + cm[1] + " " + cm[3] + " "
+                            u += cm[5]
                             self.do_update(u)
                             return
 
