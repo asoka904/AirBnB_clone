@@ -167,15 +167,25 @@ class HBNBCommand(cmd.Cmd):
 
                 s = str(cmds[1][:7]) + str(cmds[1][-1])
                 if s == "update()":
-                    new_s = cmds[1].split(",")
-                    print(new_s)
-                    if len(new_s) == 3:
-                        print("attribute")
-                        att = cmds
-                        return
-                    if len(new_s) == 2:
+                    cm = cmds[1].split("{")
+                    if len(cm) > 1:
                         print("dict")
                         return
+                    else:
+                        cm = cmds[1].split("\"")
+                        if len(cm) == 1:
+                            print("** instance id missing **")
+                            return
+                        elif len(cm) <= 3 and cm[1] == "":
+                            print("** instance id missing **")
+                            return
+                        elif len(cm) <= 5:
+                            print("** value missing **")
+                            return
+                        elif len(cm) >= 7:
+                            u = cmds[0] + " " + cm[1]  + " " + cm[3] + " " + cm[5]
+                            self.do_update(u)
+                            return
 
         print("Unknown syntax: {}".format(line))
 
