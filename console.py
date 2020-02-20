@@ -169,7 +169,13 @@ class HBNBCommand(cmd.Cmd):
                 if s == "update()":
                     cm = cmds[1].split("{")
                     if len(cm) > 1:
-                        print("dict")
+                        key = cmds[0] + "." + cm[0][8:-3]
+                        d = "{" + cm[1][:-2] + "}"
+                        d = d.replace('\'', '"')
+                        my_dict = eval(d)
+                        if key in results:
+                            for k, v in my_dict.items():
+                                setattr(results[key], k, v)
                         return
                     else:
                         cm = cmds[1].split("\"")
